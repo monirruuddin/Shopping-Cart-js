@@ -5,6 +5,9 @@ const subTotalEle = document.querySelector(".subtotal");
 const totalCartEle = document.querySelector(".total-items-in-cart")
 const shoppingBagEle = document.querySelector(".shopping-bag")
 const cartEle = document.querySelector(".cart")
+const countOfItemEle = document.querySelector(".countOfItem")
+const closeEle = document.querySelector(".closeEle")
+const closeItemEle = document.querySelector(".closeItem")
 
 function renderProducts(){
     products.forEach((product)=>{
@@ -21,11 +24,10 @@ function renderProducts(){
                     ${product.description}
                 </p>
             </div>
-            <div class="add-to-wishlist">
-                <img src="./icons/heart.png" alt="add to wish list">
-            </div>
+           
             <div class="add-to-cart">
-                <img src="./icons/bag-plus.png" alt="add to cart" onclick="addTocart(${product.id})">
+                <span onclick="addTocart(${product.id})">+</span>
+               
             </div>
         </div>`
 
@@ -68,6 +70,7 @@ function renderItem(){
   });
   subTotalEle.innerHTML =  `Subtotal (${totalItem} items): ${totalPrice.toFixed(2)}`
   totalCartEle.innerHTML = totalItem;
+  countOfItemEle.innerHTML = `$${totalPrice.toFixed(2)}`;
     
 }
 
@@ -75,9 +78,10 @@ function renderCartAdd(){
     cartItemEle.innerHTML ="";
     cart.forEach((cartItem)=>{
     cartItemEle.innerHTML += `<div class="cart-item">
+            <div class="closeItem" onclick="removeFromCart(${cartItem.id})"><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><g data-name="Layer 2"><g data-name="close"><rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"/><path d="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"/></g></g></svg></div>
             <div class="item-info" onclick="removeFromCart(${cartItem.id})">
-                <img src="${cartItem.imgSrc}" alt="${cartItem.name}">
-                <h4>T-shirt 1</h4>
+                <div><img src="${cartItem.imgSrc}" alt="${cartItem.name}"></div>
+                <div> <h4>${cartItem.name}</h4> </div>
             </div>
             <div class="unit-price">
                 <small>$</small>${cartItem.price}
@@ -125,3 +129,9 @@ shoppingBagEle.addEventListener("click",(e)=>{
         cartEle.style.display = "none";
       }
 })
+
+closeEle.addEventListener("click",()=>{
+    cartEle.style.display = "none";
+});
+
+
