@@ -1,4 +1,15 @@
 /* app.js */
+
+// Steps
+
+    // 1. Render products
+    // 2. Add Products to Cart
+    // 3. Render Cart Items
+    // 4. Change Number Of Units For a Product in Cart
+    // 5. Calculate & Render The Subtotal
+    // 6. Remove Items form Cart
+    // 7. Save Cart to Local Storage
+
 const productEle = document.querySelector(".products");
 const cartItemEle = document.querySelector(".cart-items");
 const subTotalEle = document.querySelector(".subtotal");
@@ -9,6 +20,7 @@ const countOfItemEle = document.querySelector(".countOfItem")
 const closeEle = document.querySelector(".closeEle")
 const closeItemEle = document.querySelector(".closeItem")
 
+    // 1. Render products
 function renderProducts(){
     products.forEach((product)=>{
         const Item = document.createElement("div");
@@ -35,9 +47,12 @@ function renderProducts(){
     });
 }
 renderProducts();
+ // 7. Save Cart to Local Storage
 
 let cart =JSON.parse(localStorage.getItem("CartAllItem")) ||[];
 updateCart()
+
+// add all date with unit of number
 function addTocart(id){
     if(cart.some((pro)=> pro.id === id)){
         alert("Do you want to add more");
@@ -58,15 +73,14 @@ function updateCart(){
     renderItem();
     localStorage.setItem("CartAllItem",JSON.stringify(cart));
 }
+
+// 5. Calculate & Render The Subtotal
 function renderItem(){
     let totalPrice= 0
     let totalItem=0;
   cart.forEach((item)=>{
-   
      totalPrice += item.price * item.numberOfUnit;
      totalItem += item.numberOfUnit;
-    
-    
   });
   subTotalEle.innerHTML =  `Subtotal (${totalItem} items): ${totalPrice.toFixed(2)}`
   totalCartEle.innerHTML = totalItem;
@@ -74,6 +88,7 @@ function renderItem(){
     
 }
 
+// 2. Add Products to Cart
 function renderCartAdd(){
     cartItemEle.innerHTML ="";
     cart.forEach((cartItem)=>{
@@ -95,12 +110,14 @@ function renderCartAdd(){
     });
 }
 
+// 6. Remove Items form Cart
 function removeFromCart(id){
     cart = cart.filter(item=> item.id !== id);
     updateCart();
 
 }
 
+// 4. Change Number Of Units For a Product in Cart
 function numberOfUnit(action,id){
     cart = cart.map((singleItem)=>{
         let numberOfUnit = singleItem.numberOfUnit;
